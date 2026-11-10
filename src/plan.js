@@ -22,19 +22,19 @@ export const PROTOCOLS = [
     id: 'ibuprofen',
     label: 'Ibuprofen (low dose)',
     blurb:
-      'A single low dose with food when pain is at its worst — not an around-the-clock schedule. Follow the package label or your own clinician’s direction.',
+      'As prescribed or directed by your doctor: a single low dose with food when pain is at its worst — not an around-the-clock schedule.',
   },
   {
     id: 'naproxen',
     label: 'Naproxen (as directed)',
     blurb:
-      'If your clinician has put you on naproxen, take it exactly as directed, with food.',
+      'If your doctor has prescribed naproxen for you, take it exactly as directed, with food.',
   },
   {
     id: 'steroid',
     label: 'Steroid Taper (as prescribed)',
     blurb:
-      'Only as prescribed for you. Take the day’s dose first thing in the morning so it does not interfere with sleep, and finish the taper exactly as directed.',
+      'The step up when an anti-inflammatory is not strong enough. A steroid taper starts at a dose high enough to bring the inflammation down, then steps down as you get better. Take it exactly as prescribed — the day’s dose first thing in the morning, so it does not interfere with sleep.',
   },
 ];
 
@@ -181,8 +181,13 @@ export const RED_FLAGS = [
   'Redness, warmth, or fever along with the foot pain',
   'Diabetes or poor circulation — get checked before treating a sore foot on your own',
   'Swelling that keeps increasing instead of settling down',
-  'No improvement after 2–3 weeks of following the plan consistently',
+  'No improvement after 1–2 weeks of following the plan consistently — your anti-inflammatory may not be strong enough, and your doctor may step you up to a stronger one',
 ];
+
+// How the medication side of the plan unfolds over time: an anti-inflammatory
+// gets one to two weeks to prove itself before the doctor steps treatment up.
+export const MED_ESCALATION =
+  'Give your anti-inflammatory time to work — it should start to take effect within one to two weeks. If you are not improving after one to two weeks, the medication may not be strong enough for the amount of inflammation you have, and it is time to see your doctor about a stronger option. That stronger option is usually a steroidal anti-inflammatory taper: it starts at a high enough dose to improve the inflammation, then you take less and less of it as you get better.';
 
 export const MED_SAFETY =
   'Anti-inflammatory medicines (NSAIDs like ibuprofen and naproxen) can irritate the stomach and stress the kidneys. Take them with food, do not combine two NSAIDs at once, and check with your doctor or pharmacist first if you take blood thinners, have kidney disease or stomach ulcers, are pregnant, or take blood-pressure medication.';

@@ -4,7 +4,7 @@ import {
   Footprints, Activity, ChevronDown, ChevronUp, ShieldAlert,
   Sun, Moon, TrendingDown
 } from 'lucide-react';
-import { PROTOCOLS, buildTasks, SHOES, RED_FLAGS, MED_SAFETY, DISCLAIMER } from './plan.js';
+import { PROTOCOLS, buildTasks, SHOES, RED_FLAGS, MED_SAFETY, MED_ESCALATION, DISCLAIMER } from './plan.js';
 
 const ICONS = { pill: Pill, foot: Footprints, activity: Activity };
 
@@ -324,6 +324,8 @@ export default function App() {
                 The yardstick used in the clinic: after <strong>two weeks</strong> of following the plan
                 consistently, most people are at least <strong>half better</strong>. If you reach day 14
                 and are not clearly improving, that is useful information — bring it to your clinician.
+                Your anti-inflammatory may not be strong enough, and a stronger option, often a steroid
+                taper, may be the next step.
               </p>
             </div>
 
@@ -425,6 +427,9 @@ export default function App() {
                       <strong className="text-slate-800">{p.label}:</strong> {p.blurb}
                     </div>
                   ))}
+                  <div className="p-3 bg-teal-50 border border-teal-200 rounded-lg text-teal-900">
+                    <strong>Give it one to two weeks:</strong> {MED_ESCALATION}
+                  </div>
                   <div className="p-3 bg-amber-50 border border-amber-200 rounded-lg text-amber-900">
                     <strong>Before you take an NSAID:</strong> {MED_SAFETY}
                   </div>
