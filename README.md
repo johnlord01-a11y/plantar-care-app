@@ -1,16 +1,52 @@
-# React + Vite
+# Plantar Fasciitis Care — Daily Recovery Plan
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A small web app that walks a patient through a daily plantar fasciitis
+treatment plan and tracks whether they are actually getting better.
 
-Currently, two official plugins are available:
+Built around Dr. John Lord's three-part approach:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+1. **Protect the injured tissue** — stability shoes, insoles, compression,
+   night splint
+2. **Reduce inflammation by hand** — heel massage 4x/day, plantar fascia and
+   calf stretches
+3. **Keep the body from making as much inflammation** — anti-inflammatory
+   medication as directed, plus diet and exercise
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Today's Plan** — a daily checklist generated from the patient's
+  anti-inflammatory protocol (ibuprofen low dose, naproxen as directed, or a
+  prescribed steroid taper), with check-offs saved per day
+- **Pain scores** — morning first-step pain and evening pain (0–10), recorded
+  daily
+- **Progress** — a 14-day history with plan completion and pain scores, a
+  "percent better" figure once enough days are recorded, and the two-week
+  check-in used in the clinic (most people are at least half better by day 14
+  when the plan is followed consistently)
+- **Care Guide** — the full protocol in plain language: shoe list, insoles,
+  massage and stretch instructions, medication framing and safety, and red
+  flags for when to get checked
 
-## Expanding the Oxlint configuration
+All data is stored in the browser's localStorage. There is no account and no
+server.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+## Editing the clinical content
+
+Everything clinical — daily tasks, medication protocols, the guide text,
+the shoe table, red flags — lives in **`src/plan.js`**, separate from the UI
+in `src/App.jsx`. Edit the words in `plan.js` and the app updates everywhere.
+
+This app is education only. It reflects how Dr. John Lord, DPM approaches
+plantar fasciitis care in his practice; it is not medical advice for any
+individual reader.
+
+## Develop
+
+```bash
+npm install
+npm run dev     # local dev server
+npm run build   # production build
+npm run lint    # oxlint
+```
+
+React 19 + Vite + Tailwind CSS 4.
