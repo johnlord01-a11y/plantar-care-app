@@ -20,54 +20,61 @@
 export const PROTOCOLS = [
   {
     id: 'ibuprofen',
-    label: 'Ibuprofen (low dose)',
+    label: 'Ibuprofen',
     blurb:
-      'As prescribed or directed by your doctor: a single low dose with food when pain is at its worst — not an around-the-clock schedule.',
+      'As prescribed by your doctor, up to three times a day, with food. The schedule sets the framework — pain decides each dose: at every dose time, take it if your heel hurts; if there is no pain, skip that dose.',
   },
   {
     id: 'naproxen',
-    label: 'Naproxen (as directed)',
+    label: 'Naproxen',
     blurb:
-      'If your doctor has prescribed naproxen for you, take it exactly as directed, with food.',
+      'As prescribed by your doctor, twice a day, with food. The schedule sets the framework — pain decides each dose: at every dose time, take it if your heel hurts; if there is no pain, skip that dose.',
   },
   {
     id: 'steroid',
-    label: 'Steroid Taper (as prescribed)',
+    label: 'Steroid Taper',
     blurb:
       'The step up when an anti-inflammatory is not strong enough. A steroid taper starts at a dose high enough to bring the inflammation down, then steps down as you get better. Take it exactly as prescribed — the day’s dose first thing in the morning, so it does not interfere with sleep.',
   },
+  {
+    id: 'other',
+    label: 'Other (as prescribed)',
+    blurb:
+      'Whatever anti-inflammatory your primary care doctor prescribed — for example meloxicam, once a day. Follow the schedule you were prescribed: at every dose time, take it if your heel hurts; if there is no pain, skip that dose.',
+  },
 ];
 
-// Medication reminder tasks per protocol. Doses are intentionally framed as
-// "the plan your clinician set for you" rather than a standing prescription.
+// Medication reminder tasks per protocol. The prescription sets the schedule;
+// each individual dose is pain-gated — take it if the heel hurts at that dose
+// time, skip it if there is no pain. The steroid taper is the exception: it is
+// taken exactly as prescribed, on its own step-down schedule.
+const PAIN_GATE_DETAIL = 'Take it if your heel hurts at this dose time; if there is no pain, skip this dose.';
 const MED_TASKS = {
   ibuprofen: [
-    {
-      id: 'ibu_1',
-      title: 'Ibuprofen — single low dose with food, only if you need it today',
-      time: '7:30 AM',
-      icon: 'pill',
-    },
+    { id: 'ibu_1', slot: 'morning', title: 'Ibuprofen (1 of 3) — with food', detail: PAIN_GATE_DETAIL, time: '7:30 AM', icon: 'pill' },
+    { id: 'ibu_2', slot: 'midday', title: 'Ibuprofen (2 of 3) — with food', detail: PAIN_GATE_DETAIL, time: '1:30 PM', icon: 'pill' },
+    { id: 'ibu_3', slot: 'evening', title: 'Ibuprofen (3 of 3) — with food', detail: PAIN_GATE_DETAIL, time: '7:30 PM', icon: 'pill' },
   ],
   naproxen: [
-    {
-      id: 'nap_1',
-      title: 'Naproxen — morning dose with food (as directed for you)',
-      time: '7:30 AM',
-      icon: 'pill',
-    },
-    {
-      id: 'nap_2',
-      title: 'Naproxen — evening dose with food (as directed for you)',
-      time: '7:30 PM',
-      icon: 'pill',
-    },
+    { id: 'nap_1', slot: 'morning', title: 'Naproxen (1 of 2) — with food', detail: PAIN_GATE_DETAIL, time: '7:30 AM', icon: 'pill' },
+    { id: 'nap_2', slot: 'evening', title: 'Naproxen (2 of 2) — with food', detail: PAIN_GATE_DETAIL, time: '7:30 PM', icon: 'pill' },
   ],
   steroid: [
     {
       id: 'steroid_dose',
+      slot: 'waking',
       title: 'Steroid taper — today’s dose, exactly as prescribed',
       time: '6:30 AM (Upon Waking)',
+      icon: 'pill',
+    },
+  ],
+  other: [
+    {
+      id: 'other_1',
+      slot: 'morning',
+      title: 'Your prescribed anti-inflammatory — dose time',
+      detail: 'Follow the schedule your doctor prescribed (for example, meloxicam once a day). Take it if your heel hurts at this dose time; if there is no pain, skip this dose.',
+      time: '7:30 AM',
       icon: 'pill',
     },
   ],
@@ -84,8 +91,10 @@ export function buildTasks(protocolId) {
   const medTasks = MED_TASKS[protocolId] || [];
   const tasks = [];
 
+  const bySlot = (slot) => medTasks.filter((t) => t.slot === slot);
+
   // Steroid goes in first thing, before everything else.
-  tasks.push(...medTasks.filter((t) => t.id === 'steroid_dose'));
+  tasks.push(...bySlot('waking'));
 
   tasks.push({
     id: 'stretch_bed',
@@ -114,8 +123,8 @@ export function buildTasks(protocolId) {
     icon: 'foot',
   });
 
-  // Morning medication (non-steroid protocols).
-  tasks.push(...medTasks.filter((t) => t.id === 'ibu_1' || t.id === 'nap_1'));
+  // Morning medication dose.
+  tasks.push(...bySlot('morning'));
 
   tasks.push({
     id: 'massage_2',
@@ -130,12 +139,20 @@ export function buildTasks(protocolId) {
     time: '12:15 PM',
     icon: 'foot',
   });
+
+  // Midday medication dose (ibuprofen protocols).
+  tasks.push(...bySlot('midday'));
+
   tasks.push({
     id: 'massage_3',
     title: 'Heel Massage & Swelling Removal (3 of 4)',
     time: '4:00 PM',
     icon: 'foot',
   });
+
+  // Evening medication dose.
+  tasks.push(...bySlot('evening'));
+
   tasks.push({
     id: 'massage_4',
     title: 'Heel Massage & Swelling Removal (4 of 4)',
@@ -149,9 +166,6 @@ export function buildTasks(protocolId) {
     time: '8:15 PM',
     icon: 'foot',
   });
-
-  // Evening medication (naproxen protocols).
-  tasks.push(...medTasks.filter((t) => t.id === 'nap_2'));
 
   tasks.push({
     id: 'night_routine',

@@ -15,8 +15,12 @@ Built around Dr. John Lord's three-part approach:
 ## Features
 
 - **Today's Plan** — a daily checklist generated from the patient's
-  anti-inflammatory protocol (ibuprofen low dose, naproxen as directed, or a
-  prescribed steroid taper), with check-offs saved per day
+  anti-inflammatory protocol (ibuprofen, naproxen, a prescribed steroid
+  taper, or another anti-inflammatory their primary care doctor prescribed),
+  with check-offs saved per day. Medication doses follow the prescription's
+  schedule — ibuprofen up to three times a day, naproxen twice a day — and
+  each dose is pain-gated: take it if the heel hurts at that dose time, skip
+  it if there is no pain
 - **Pain scores** — morning first-step pain and evening pain (0–10), recorded
   daily
 - **Progress** — a 14-day history with plan completion and pain scores, a

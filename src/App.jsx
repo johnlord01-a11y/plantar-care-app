@@ -225,7 +225,7 @@ export default function App() {
               <label className="block text-xs font-bold text-teal-800 uppercase tracking-wider mb-2">
                 Your Anti-Inflammatory Plan:
               </label>
-              <div className="grid grid-cols-3 gap-2">
+              <div className="grid grid-cols-2 gap-2">
                 {PROTOCOLS.map((p) => (
                   <button
                     key={p.id}
